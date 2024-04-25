@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Focus Test</title>
+    <style>
+        #log {
+            height: 200px;
+            overflow: auto;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        input, button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="Click me and try focusing out">
+    <button onclick="clearLog()">Clear Log</button>
+    <div id="log"></div>
+
+    <script>
+        const log = document.getElementById('log');
+        const inputFields = document.querySelectorAll('input, button');
+
+        inputFields.forEach(element => {
+            element.addEventListener('focus', event => {
+                addToLog(`Focused on: ${event.target.tagName}, Type: ${event.type}`);
+            });
+            element.addEventListener('blur', event => {
+                addToLog(`Blurred from: ${event.target.tagName}, Type: ${event.type}`);
+            });
+        });
+
+        function addToLog(message) {
+            const entry = document.createElement('p');
+            entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight; // Scroll to bottom
+        }
+
+        function clearLog() {
+            log.innerHTML = '';
+        }
+    </script>
+</body>
+</html>
